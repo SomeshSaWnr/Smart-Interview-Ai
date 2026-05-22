@@ -1,0 +1,40 @@
+# Backend .gitignore - Node/Express
+
+# Dependencies
+node_modules/
+
+# Build / output
+dist/
+build/
+coverage/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+
+# Runtime files
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Temporary / uploads
+tmp/
+uploads/
+
+# Database files
+*.sqlite3
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Misc
+*.tgz
+.cache/
