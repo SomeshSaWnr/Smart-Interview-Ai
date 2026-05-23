@@ -131,25 +131,52 @@ async function logoutUserController(req, res) {
     })
 }
 
-/**
- * @name getMeController
- * @description get the current logged in user details.
- * @access private
- */
 async function getMeController(req, res) {
 
-    const user = await userModel.findById(req.user.id)
+    const token = req.cookies.token
 
+    if (!token) {
+        return res.status(200).json({
+            message: "User not logged in.",
+            user: null
+        })
+    }
 
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
-    res.status(200).json({
-        message: "User details fetched successfully",
-        user: {
-            id: user._id,
-            username: user.username,
-            email: user.email
+        // Check if token is blacklisted
+        const isTokenBlacklisted = await tokenBlacklistModel.findOne({ token })
+        if (isTokenBlacklisted) {
+            return res.status(200).json({
+                message: "Session is blacklisted or invalid.",
+                user: null
+            })
         }
-    })
+
+        const user = await userModel.findById(decoded.id)
+        if (!user) {
+            return res.status(200).json({
+                message: "User not found.",
+                user: null
+            })
+        }
+
+        return res.status(200).json({
+            message: "User details fetched successfully",
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email
+            }
+        })
+
+    } catch (err) {
+        return res.status(200).json({
+            message: "Invalid session token.",
+            user: null
+        })
+    }
 
 }
 
