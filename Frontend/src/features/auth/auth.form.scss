@@ -21,7 +21,8 @@ main {
 }
 
 .form-container {
-  min-width: 380px;
+  width: calc(100% - 2rem);
+  max-width: 400px;
   padding: 2.5rem;
   background: rgba(15, 15, 35, 0.8);
   backdrop-filter: blur(20px);

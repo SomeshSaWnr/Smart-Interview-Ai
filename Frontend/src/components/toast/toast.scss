@@ -1,0 +1,141 @@
+// Toast System Variables (matching home.scss/interview.scss)
+$bg-toast:       rgba(20, 20, 35, 0.9);
+$border-color:   rgba(102, 126, 234, 0.15);
+$font-stack:     'Inter', system-ui, -apple-system, sans-serif;
+
+$toast-success:  #10b981;
+$toast-error:    #ef4444;
+$toast-info:     #3b82f6;
+$toast-warning:  #f59e0b;
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100px) translateY(0);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+.toast-container {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 420px;
+    width: calc(100% - 3rem);
+    pointer-events: none;
+}
+
+.toast {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem 1.1rem;
+    background: $bg-toast;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid $border-color;
+    border-radius: 0.85rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 1px 1px rgba(255, 255, 255, 0.05) inset;
+    animation: slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+    }
+
+    &__icon {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    &__content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+    }
+
+    &__message {
+        margin: 0;
+        font-family: $font-stack;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #e8e6f0;
+        line-height: 1.4;
+    }
+
+    &__close {
+        flex-shrink: 0;
+        background: none;
+        border: none;
+        color: #6b6b8d;
+        cursor: pointer;
+        padding: 0.25rem;
+        border-radius: 0.35rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+
+        &:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+    }
+
+    // Type modifiers
+    &--success {
+        border-left: 4px solid $toast-success;
+        .toast__icon {
+            color: $toast-success;
+            background: rgba($toast-success, 0.1);
+        }
+    }
+
+    &--error {
+        border-left: 4px solid $toast-error;
+        .toast__icon {
+            color: $toast-error;
+            background: rgba($toast-error, 0.1);
+        }
+    }
+
+    &--info {
+        border-left: 4px solid $toast-info;
+        .toast__icon {
+            color: $toast-info;
+            background: rgba($toast-info, 0.1);
+        }
+    }
+
+    &--warning {
+        border-left: 4px solid $toast-warning;
+        .toast__icon {
+            color: $toast-warning;
+            background: rgba($toast-warning, 0.1);
+        }
+    }
+}
